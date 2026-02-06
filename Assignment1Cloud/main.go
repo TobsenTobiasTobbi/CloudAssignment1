@@ -22,7 +22,9 @@ func main () {
 	router := http.NewServeMux()
 
 	// Set up and attach handler endpoints to router
-	
+	router.HandleFunc(handler.STATUS_PATH, handler.)
+	router.HandleFunc(handler.INFO_PATH, handler.)
+	router.Handlefunc(handler.EXCHANGE_PATH, handler.)
 
 	// Start server
 	log.Println("Starting server on port " + port + " ...")
