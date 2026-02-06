@@ -4,16 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func StatusHandler (w http.ResponseWriter, r *http.Request) {
 
-	switch r.Method {
-	case http.MethodGet:
-		handleGetRequest(w, r)
-	default:
-		http.Error(w, "REST Method '" + r.Method + "' not supported. Currently only '" + http.MethodGet +
-					"' and '" + http.MethodPost + "' are supported.", http.StatusNotImplemented)
+	if r.Method != http.MethodGet {
+		w.Header().Set("Allow", http.MethodGet)
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
 	}
 	
+
+
 }
