@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"Assigment1Cloud/models"
 	"encoding/json"
 	"net/http"
 	"time"
@@ -32,12 +33,12 @@ func handleStatusGetRequest(w http.ResponseWriter, r *http.Request) {
 	// Calculating uptime
 	uptime := int(time.Since(startTime).Seconds())
 
-	// Response
-	response := map[string]interface{}{
-		"restcountriesapi": restCountriesStatus,
-		"currenciesapi":    currencyAPIStatus,
-		"version":          "v1",
-		"uptime":           uptime,
+	// Response, gets it from models StatusResponse
+	response := models.StatusResponse{
+		RestCountriesAPI: restCountriesStatus,
+		CurrenciesAPI:    currencyAPIStatus,
+		Version:          "v1",
+		Uptime:           int64(uptime),
 	}
 
 	// Sending out a response
