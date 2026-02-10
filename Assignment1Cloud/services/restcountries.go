@@ -1,16 +1,15 @@
 package services
 
 import (
-	"Assignment1Cloud/models"
+	"Assigment1Cloud/models"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-// Gets country information by the 2 letter country code, and returns error
+// GetCountryByCode Gets country information by the 2-letter country code, and returns error
 // or the map containing the relevant country data
 func GetCountryByCode(countryCode string) (*models.CountryInfo, error) {
-	// Makes the API URL with the relevant country code
 	url := fmt.Sprintf("%s/alpha/%s", REST_COUNTRIES_API, countryCode)
 
 	// GET request to the REST Countries API
@@ -27,7 +26,7 @@ func GetCountryByCode(countryCode string) (*models.CountryInfo, error) {
 	}
 
 	// Making JSON response into a slice (to work with it in my code)
-	var countries []map[string]interface{}
+	var countries []models.CountryInfo
 	if err := json.NewDecoder(resp.Body).Decode(&countries); err != nil {
 		return nil, fmt.Errorf("failed to decode response: %w", err)
 	}
@@ -38,10 +37,10 @@ func GetCountryByCode(countryCode string) (*models.CountryInfo, error) {
 	}
 
 	// Returning the only country as response
-	return countries[0], nil
+	return &countries[0], nil
 }
 
-// Checks if the REST Countries API is reachable
+// GetRestCountriesStatus Checks if the REST Countries API is reachable
 func GetRestCountriesStatus() int {
 	// Attempting to get the REST Countries API base URL
 	resp, err := http.Get(REST_COUNTRIES_API)
@@ -52,6 +51,6 @@ func GetRestCountriesStatus() int {
 	// Ensure that the response body closes
 	defer resp.Body.Close()
 
-	// Returning the actal HTTP status code
+	// Returning the actual HTTP status code
 	return resp.StatusCode
 }
