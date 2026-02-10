@@ -20,6 +20,7 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+	handleStatusGetRequest(w, r)
 }
 
 // Decides where to send user from information
