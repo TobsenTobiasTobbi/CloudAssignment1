@@ -38,20 +38,20 @@ func handleStatusGetRequest(w http.ResponseWriter, r *http.Request) {
 		"version":          "v1",
 		"uptime":           uptime,
 	}
-}
 
 	// Sending out a response
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(response)
+	json.NewEncoder(w).Encode(&response)
 
-func getAPIStatus(apiURL string) int {
-	respon, erro := http.Get(apiURL)
-	if erro != nil {
-		return 0 // cant get into service
-	}
-	defer respon.Body.Close()
-
-	return respon.StatusCode
 }
 
+func getAPIStatus(apiURL string) int {
+	resp, err := http.Get(apiURL)
+	if err != nil {
+		return 0 // cant get into service
+	}
+	defer resp.Body.Close()
+
+	return resp.StatusCode
+}
