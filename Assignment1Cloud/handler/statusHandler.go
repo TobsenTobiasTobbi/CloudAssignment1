@@ -46,6 +46,7 @@ func handleStatusGetRequest(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// Function to collect the API Status
 func getAPIStatus(apiURL string) int {
 	resp, err := http.Get(apiURL)
 	if err != nil {
