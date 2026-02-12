@@ -2,6 +2,7 @@ package handler
 
 import (
 	"Assigment1Cloud/models"
+	"Assigment1Cloud/services"
 	"encoding/json"
 	"net/http"
 	"time"
@@ -27,8 +28,8 @@ func StatusHandler(w http.ResponseWriter, r *http.Request) {
 // Decides where to send user from information
 func handleStatusGetRequest(w http.ResponseWriter, r *http.Request) {
 	// Getting status from both API's, might have to change where this is
-	restCountriesStatus := getAPIStatus(REST_COUNTRIES_API)
-	currencyAPIStatus := getAPIStatus(CURRENCY_API)
+	restCountriesStatus := services.GetRestCountriesStatus()
+	currencyAPIStatus := services.GetCurrencyStatus()
 
 	// Calculating uptime
 	uptime := int(time.Since(startTime).Seconds())
@@ -46,15 +47,4 @@ func handleStatusGetRequest(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(&response)
 
-}
-
-// Function to collect the API Status
-func getAPIStatus(apiURL string) int {
-	resp, err := http.Get(apiURL)
-	if err != nil {
-		return 0 // cant get into service
-	}
-	defer resp.Body.Close()
-
-	return resp.StatusCode
 }
