@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// Cotrolling the time when the service starts
+// Controlling the time when the service starts
 var startTime time.Time
 
 func init() {
